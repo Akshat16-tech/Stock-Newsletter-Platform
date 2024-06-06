@@ -116,10 +116,6 @@ export const updateUserName = async (req, res) => {
       return res.status(404).send(`No user with id: ${req.userId}`);
     }
 
-    if (req.userId === process.env.GUEST_ID) {
-      return res.status(400).send({ message: "Not allowed to modify guest account!" });
-    }
-
     await User.findByIdAndUpdate(req.userId, { name: `${firstName} ${lastName}` });
     const updatedUser = await User.findById(req.userId);
 
@@ -142,10 +138,6 @@ export const updateUserPassword = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(404).send(`No user with id: ${req.userId}`);
-    }
-
-    if (req.userId === process.env.GUEST_ID) {
-      return res.status(400).send({ message: "Not allowed to modify guest account!" });
     }
 
     if (newPassword !== newPasswordConfirmed) {
@@ -173,10 +165,6 @@ export const removeUser = async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(404).send(`No user with id: ${req.userId}`);
-    }
-
-    if (req.userId === process.env.GUEST_ID) {
-      return res.status(400).send({ message: "Not allowed to modify guest account!" });
     }
 
     await ActionLog.deleteMany({ userId: req.userId });
