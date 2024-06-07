@@ -10,19 +10,22 @@ const auth = async (req, res, next) => {
     const isCustomAuth = token.length < 500;
     let contentDecoded;
 
-    if (token && isCustomAuth) {      
+    if (token && isCustomAuth) {
       contentDecoded = jwt.verify(token, jwtSecret);
       req.userId = contentDecoded?.id;
     } else {
       contentDecoded = jwt.decode(token);
       req.userId = contentDecoded?.sub;
-    }    
-
-    const user = await User.findById(req.userId);
-    if (user && user.userType === "admin") {
-      next();
+    }
+    if (req.path === "/user/userlist") {
+      const user = await User.findById(req.userId);
+      if (user && user.userType === "admin") {
+        next();
+      } else {
+        res.status(403).json({ message: "You are not authorized to access this resource" });
+      }
     } else {
-      res.status(403).json({ message: "You are not authorized to access this resource" });
+      next();
     }
   } catch (error) {
     res.status(403).json({ message: "Not authenticated!" });
