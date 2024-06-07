@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-// import Dashboard from "./components/AdminDashboard/Dashboard/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Auth from "./components/Auth/Auth";
 import Careers from "./components/Careers/Careers";
 import Footer from "./components/Footer/Footer";
@@ -44,7 +44,7 @@ const App = () => {
             path="/dashboard"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <AdminDashboard />
+                {user?.result?.userType === "admin" ? <AdminDashboard /> : <Dashboard />}
               </ProtectedRoute>
             }
           />

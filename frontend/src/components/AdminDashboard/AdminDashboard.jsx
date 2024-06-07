@@ -32,8 +32,8 @@ export default function AdminDashboard() {
             {/* <!-- mobile menu bar --> */}
             <div className="bg-gray-800 text-gray-100 flex justify-between md:hidden">
               {/* <!-- logo --> */}
-              <a href="#" className="block p-4 text-white font-bold">
-                Admin Penal
+              <a href="/dashboard" className="block p-4 text-white font-bold">
+                Admin Panel
               </a>
 
               {/* <!-- mobile menu button --> */}
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
             >
               {/* <!-- logo --> */}
               <a
-                href="#"
+                href="/dashboard"
                 className="text-white flex items-center space-x-2 px-4"
               >
                 {/* <svg
@@ -87,12 +87,12 @@ export default function AdminDashboard() {
 
               {/* <!-- nav --> */}
               <nav>
-                <a
+                <li
                   onClick={() => setCurrentTab("dashboard")}
                   className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white"
                 >
                   Dashboard
-                </a>
+                </li>
                 <li
                   onClick={() => setCurrentTab("userList")}
                   className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white"
