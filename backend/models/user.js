@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
     min: 0
+  },
+  userType: {
+    type: String,
+    required: true
   }
 });
 

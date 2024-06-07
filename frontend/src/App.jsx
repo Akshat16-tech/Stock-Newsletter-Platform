@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Markets from "./components/Markets/Markets";
 import Navigation from './components/Navigation/Navigation';
@@ -14,8 +14,6 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Guide from "./components/Guide/Guide";
 import Careers from "./components/Careers/Careers";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
@@ -26,8 +24,9 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem('profile'))
+  const [user] = useState(JSON.parse(localStorage.getItem('profile')));
   const isAuthenticated = user ? true : false; // Replace with your authentication logic
+
   return (
     <div className="font-inter">
       <ScrollToTop>
