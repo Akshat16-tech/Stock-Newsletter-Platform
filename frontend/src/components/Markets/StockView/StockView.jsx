@@ -20,6 +20,7 @@ const StockView = () => {
   const [sortByPrice, setSortByPrice] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [stocksPerPage] = useState(12);
+  const isAdmin = true
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,10 +58,10 @@ const StockView = () => {
 
   return (
     <>
-      <TopInfoSection count={stocks?.length ? stocks.length : 0} />
-      <div className="bg-white dark:bg-gray-800">
+      {!isAdmin && <TopInfoSection count={stocks?.length ? stocks.length : 0} />}
+      <div className={isAdmin ? "bg-white dark:bg-gray-800" : "w-full h-[100vh]"}>
         <div className="container mx-auto px-4 sm:px-8 w-full">
-          <div className="py-8">
+          <div className={!isAdmin ? "py-8" : "py-8 overflow-y-scroll h-[100vh]"}>
             <div className="flex flex-row mb-1 sm:mb-0 justify-between w-full">
               <input onChange={searchStocks} type="text" id="&quot;form-subscribe-Filter" className="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="Search by company or ticker..." />
               {isListMode ?
