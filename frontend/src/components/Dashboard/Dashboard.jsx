@@ -5,6 +5,7 @@ import Insights from "./Insights/Insights";
 import Transactions from "./Transactions/Transactions";
 import Logs from "./Logs/Logs";
 
+
 const Dashboard = () => {
   const [user] = useState(JSON.parse(localStorage.getItem('profile')));
   const [currentTab, setCurrentTab] = useState("Account");

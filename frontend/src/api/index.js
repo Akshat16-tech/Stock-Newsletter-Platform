@@ -14,6 +14,7 @@ api.interceptors.request.use((req) => {
 // authentication and user
 export const register = (formInput) => api.post('/user/register', formInput);
 export const login = (formInput) => api.post('/user/login', formInput);
+export const userList = () => api.get('/user/userlist');
 export const userInfo = () => api.get('/user/userinfo');
 export const updateUsername = (formInput) => api.patch('/user/username', formInput);
 export const removeUser = () => api.delete('/user/removeuser');

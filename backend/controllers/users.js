@@ -61,7 +61,7 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
-
+    
     if (!existingUser) {
       return res.status(404).json({ message: "User doesn't exist." });
     }
@@ -71,7 +71,7 @@ export const loginUser = async (req, res) => {
     if (!passwordCorrect) {
       return res.status(400).json({ message: "Invalid login credentials." });
     }
-
+    
     const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, jwtSecret, { expiresIn: "120m" });
 
     const loginLog = new ActionLog({
@@ -80,7 +80,7 @@ export const loginUser = async (req, res) => {
     });
     await loginLog.save();
     clearFirstLog(res, existingUser._id);
-
+    
     const userResponse = {
       name: existingUser.name,
       email: existingUser.email,
@@ -91,6 +91,21 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ result: userResponse, token: token });
   } catch (err) {
     res.status(500).json({ message: "An error occurred while registering the user." });
+  }
+};
+
+export const getUserList = async (req, res) => {
+  try {
+    const userData = await User.find();
+
+    const userList = userData.map(user => {
+      const { email, name, coins, userType } = user;
+      return { email, name, coins, userType };
+    });
+
+    res.status(200).json(userList);
+  } catch (error) {
+    res.status(404).json({ message: "An error has occurred fetching the user requested." });
   }
 };
 

@@ -17,7 +17,13 @@ const auth = async (req, res, next) => {
       contentDecoded = jwt.decode(token);
       req.userId = contentDecoded?.sub;
     }    
-    next();
+
+    const user = await User.findById(req.userId);
+    if (user && user.userType === "admin") {
+      next();
+    } else {
+      res.status(403).json({ message: "You are not authorized to access this resource" });
+    }
   } catch (error) {
     res.status(403).json({ message: "Not authenticated!" });
   }

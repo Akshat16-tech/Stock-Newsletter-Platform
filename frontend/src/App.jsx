@@ -27,6 +27,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 const App = () => {
   const [user] = useState(JSON.parse(localStorage.getItem('profile')));
   const isAuthenticated = user ? true : false; // Replace with your authentication logic
+  console.log("user", user);
   const location = useLocation();
   const shouldRenderFooter = location.pathname !== "/dashboard";
   return (

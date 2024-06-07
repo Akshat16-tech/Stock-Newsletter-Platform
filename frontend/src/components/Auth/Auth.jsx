@@ -38,10 +38,10 @@ const Auth = () => {
     setIsLoading(true);
     setForm({ ...form, "userType": isAdmin ? 'admin' : 'user' });
     dispatch({ type: AUTH_ERROR_OCCURRED, payload: "" });
-
     if (isSignup) {
       if (isAdmin && form.secretCode !== process.env.REACT_APP_ADMIN_SECRET_CODE) {
         dispatch({ type: AUTH_ERROR_OCCURRED, payload: "Incorrect Secret code!" });
+        setIsLoading(false);
       } else {
         dispatch(registerUser(form, navigate, state));
       }

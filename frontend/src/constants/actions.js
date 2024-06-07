@@ -13,6 +13,7 @@ export const REMOVE_PURCHASED = 'REMOVE_PURCHASED';
 //authentication and user actions
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const USER_INFO = 'USER_INFO';
 export const USER_UPDATE_NAME = 'USER_UPDATE_NAME';
 export const DELETE_USER = 'DELETE_USER';
