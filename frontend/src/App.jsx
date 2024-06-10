@@ -15,6 +15,8 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import StockDetails from "./components/StockDetails/StockDetails";
 import TransactionForm from "./components/TransactionForm/TransactionForm";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import Blogs from "./components/Blogs/Blog";
+
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
@@ -40,6 +42,8 @@ const App = () => {
           <Route path="/careers" element={<Careers />} />
           <Route path="/markets" element={<Markets />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/blog" element={<Blogs />} />
           <Route path="/stock/:id" element={<StockDetails />} />
           <Route
             path="/dashboard"
