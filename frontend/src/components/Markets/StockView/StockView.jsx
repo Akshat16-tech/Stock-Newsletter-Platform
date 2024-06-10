@@ -34,7 +34,7 @@ const StockView = () => {
     dispatch(getStocks(), getUserList());
   }, [dispatch]);
 
-  console.log("users", users);
+  // console.log("users", users);
 
   useEffect(() => {
     socket.connect();

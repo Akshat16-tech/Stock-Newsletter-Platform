@@ -18,7 +18,7 @@ export default function AdminDashboard() {
       case "userList":
         return <UserList />;
       default:
-        return <Dashboard />;
+        return <Dashboard setCurrentTab={setCurrentTab}/>;
     }
   };
 

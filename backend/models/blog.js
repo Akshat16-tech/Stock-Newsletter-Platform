@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
-const Blog = new mongoose.Schema({
+const blogSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -18,7 +18,7 @@ const Blog = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
   },
   create_at: {
     type: Date,
@@ -26,4 +26,7 @@ const Blog = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Blog", Blog);
+
+let Blog = mongoose.model('Blog', blogSchema);
+
+export default Blog;

@@ -1,5 +1,5 @@
 // import { jwtDecode } from "jwt-decode";
-import { fetchBlogs } from "../api/index";
+import { fetchBlogs, createBlog } from "../api/index";
 import {
   BLOG_ERROR_OCCURRED,
   CREATE_BLOGS,
@@ -25,7 +25,7 @@ export const getBlogs = () => async (dispatch) => {
 };
 
 // POST Blogs
-export const createBlog = (formInput) => async (dispatch) => {
+export const createNewBlog = (formInput) => async (dispatch) => {
   try {
     const { data } = await createBlog(formInput);
     dispatch({ type: CREATE_BLOGS, payload: data });
