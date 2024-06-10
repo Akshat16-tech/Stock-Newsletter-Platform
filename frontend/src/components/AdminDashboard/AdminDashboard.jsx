@@ -61,7 +61,7 @@ export default function AdminDashboard() {
             {/* <!-- sidebar --> */}
             <div
               id="sidebar"
-              className="sidebar bg-blue-800 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-10"
+              className="sidebar bg-blue-800 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-10 dark:bg-[#374151]"
             >
               <a
                 href="/dashboard"
@@ -74,19 +74,19 @@ export default function AdminDashboard() {
               <nav>
                 <li
                   onClick={() => setCurrentTab("dashboard")}
-                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer"
+                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer dark:hover:bg-[#1F2937]"
                 >
                   Dashboard
                 </li>
                 <li
                   onClick={() => setCurrentTab("userList")}
-                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer"
+                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer dark:hover:bg-[#1F2937]"
                 >
                   User List
                 </li>
                 <li
                   onClick={() => setCurrentTab("stocksList")}
-                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer"
+                  className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white cursor-pointer dark:hover:bg-[#1F2937]"
                 >
                   Stocks
                 </li>
