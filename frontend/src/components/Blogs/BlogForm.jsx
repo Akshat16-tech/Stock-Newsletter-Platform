@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createBlog } from "../../actions/blog";
+import { createNewBlog } from "../../actions/blog";
 import { BLOG_ERROR_OCCURRED } from "../../constants/actions";
 
 export default function Blog() {
@@ -14,9 +14,8 @@ export default function Blog() {
 
   const handleSubmitNewBlog = (e) => {
     e.preventDefault();
-    console.log("form", form);
     dispatch({ type: BLOG_ERROR_OCCURRED, payload: "" });
-    dispatch(createBlog(form));
+    dispatch(createNewBlog(form));
   };
 
   return (
