@@ -11,6 +11,7 @@ import {
 export const getBlogs = () => async (dispatch) => {
   try {
     const { data } = await fetchBlogs();
+    console.log("data", data);
     dispatch({ type: GET_ALL_BLOGS, payload: data });
   } catch (error) {
     if (error.response) {

@@ -35,7 +35,11 @@ app.use(cors());
 
 // express.js routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  if (req.query.filename) {
+    res.sendFile(path.join(__dirname + '/uploads/' + req.query.filename));
+  } else {
+    res.sendFile(__dirname + '/index.html');
+  }
 });
 app.use('/stocks', stockRoutes);
 app.use('/user', userRoutes);
@@ -47,9 +51,6 @@ app.get('*', (req, res) => {
   res.status(404).sendFile(__dirname + '/not_found.html');
 });
 
-app.get('/:filename', (req, res) => {
-  res.sendFile(path.join(__dirname + '/uploads/' + req.params.filename));
-});
 
 // socket.io data emission
 io.on('connection', (socket) => {

@@ -7,7 +7,7 @@ const router = express.Router();
 export const getBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find();
-        res.json(blogs);
+        res.status(200).json(blogs);
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }
@@ -22,9 +22,9 @@ export const createBlog = async (req, res) => {
             image: req.file.filename,
             // email: req.body.email,
         });
-        res.json({ status: 200 });
+        res.status(201).json({ status: 200 });
     } catch (error) {
-        res.json({ status: "error", send: error });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -41,3 +41,5 @@ export const removeBlog = async (req, res) => {
         res.status(500).json({ status: "error", message: error.message });
     }
 }
+
+export default router;

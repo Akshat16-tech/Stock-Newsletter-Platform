@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { getBlogs, removeBlog } from "../../actions/blog";
+import { getBlogs, removeBlog } from "../../../actions/blog";
 import BlogForm from "./BlogForm";
+import BlogSkeleton from "./BlogSkeleton";
+import Modal from "../../Common/Modal";
 
 export default function BlogParent() {
   const blogs = useSelector((state) => state.blogsReducer);
   const dispatch = useDispatch();
-  const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
-    dispatch(getBlogs(), removeBlog());
+    dispatch(getBlogs());
   }, [dispatch]);
-
-  console.log("blogs", blogs);
+  console.log("blog", blogs);
 
   return (
     <>
-      <div className="pt-20">
-        <div className="flex justify-center items-center">
+      <div className="pt-10 pe-3">
+        <div className="flex justify-end items-center">
           <button
-            onClick={() => setShowForm(true)}
+            onClick={handleOpenModal}
             className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-[#374151] rounded-md focus:outline-none focus:bg-gray-600"
           >
             Create Blog
           </button>
         </div>
-        {showForm && <BlogForm />}
+        {blogs}
 
-        {blogs &&
+        {blogs ? (
           blogs.map((blog) => (
             <div
               key={blog._id}
@@ -47,8 +56,15 @@ export default function BlogParent() {
               <h3 className="font-bold">{blog.content}</h3>
               <br />
             </div>
-          ))}
+          ))) : (<BlogSkeleton />)}
       </div>
+      <Modal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="Create Blog"
+      >
+        <BlogForm handleCloseModal={handleCloseModal}/>
+      </Modal>
     </>
   );
 }
