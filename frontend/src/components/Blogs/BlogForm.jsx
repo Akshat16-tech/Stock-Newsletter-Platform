@@ -1,5 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  BtnBold,
+  BtnBulletList,
+  BtnClearFormatting,
+  BtnItalic,
+  BtnLink,
+  BtnNumberedList,
+  BtnRedo,
+  BtnStrikeThrough,
+  BtnUnderline,
+  BtnUndo,
+  Editor,
+  EditorProvider,
+  Toolbar,
+} from "react-simple-wysiwyg";
 import { createNewBlog } from "../../actions/blog";
 import { BLOG_ERROR_OCCURRED } from "../../constants/actions";
 
@@ -7,6 +22,13 @@ export default function Blog() {
   //   const Blog = useSelector((state) => state.blogsReducer);
   const dispatch = useDispatch();
   const [form, setForm] = useState({});
+  const [value, setValue] = useState("my <b>HTML</b>");
+  //   const BtnAlignCenter = createButton("Align center", "≡", "justifyCenter");
+  //   const BtnUnderline = createButton("Under Line", "U", "underline");
+
+  function onChange(e) {
+    setValue(e.target.value);
+  }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -104,7 +126,7 @@ export default function Blog() {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className=" dark:text-gray-200" for="passwordConfirmation">
                 Content
               </label>
@@ -114,7 +136,23 @@ export default function Blog() {
                 onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
               ></textarea>
-            </div>
+            </div> */}
+            <EditorProvider>
+              <Editor value={value} onChange={onChange}>
+                <Toolbar>
+                  <BtnBold />
+                  <BtnItalic />
+                  <BtnUnderline />
+                  <BtnLink />
+                  <BtnNumberedList />
+                  <BtnBulletList />
+                  <BtnRedo />
+                  <BtnUndo />
+                  <BtnStrikeThrough />
+                  <BtnClearFormatting />
+                </Toolbar>
+              </Editor>
+            </EditorProvider>
 
             <div>
               <label className="block text-sm font-medium ">Image</label>

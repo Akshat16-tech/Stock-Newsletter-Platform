@@ -17,7 +17,6 @@ import TransactionForm from "./components/TransactionForm/TransactionForm";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import Blogs from "./components/Blogs/Blog";
 
-
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
@@ -27,61 +26,67 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 };
 
 const App = () => {
-  const [user] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [user] = useState(JSON.parse(localStorage.getItem("profile")));
   const isAuthenticated = user ? true : false; // Replace with your authentication logic
 
   const location = useLocation();
   const shouldRenderFooter = location.pathname !== "/dashboard";
   return (
-    <div className="font-inter">
-      <ScrollToTop>
-          <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/markets" element={<Markets />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/blog" element={<Blogs />} />
-          <Route path="/stock/:id" element={<StockDetails />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                {user?.result?.userType === "admin" ? <AdminDashboard /> : <Dashboard />}
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/purchased"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <PurchasedStocks />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/purchased/:id"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <PurchasedStockDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/transaction/:id"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <TransactionForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        {shouldRenderFooter && <Footer />}
-      </ScrollToTop>
-    </div>
+    <>
+      <Navigation />
+      <div className="font-inter">
+        <ScrollToTop>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/guide" element={<Guide />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/markets" element={<Markets />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/blog" element={<Blogs />} />
+            <Route path="/stock/:id" element={<StockDetails />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  {user?.result?.userType === "admin" ? (
+                    <AdminDashboard />
+                  ) : (
+                    <Dashboard />
+                  )}
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/purchased"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <PurchasedStocks />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/purchased/:id"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <PurchasedStockDetails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/transaction/:id"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <TransactionForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          {shouldRenderFooter && <Footer />}
+        </ScrollToTop>
+      </div>
+    </>
   );
 };
 

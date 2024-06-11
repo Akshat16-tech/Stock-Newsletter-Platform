@@ -1,51 +1,46 @@
 import React, { useEffect } from "react";
-import { StashCard } from './../../Common/Card';
+import { StashCard } from "./../../Common/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { getStocks } from "./../../../actions/stocks";
 import { getUserList } from "../../../actions/auth";
 import { getLogs } from "../../../actions/logs";
 
-
-export default function Dashboard({setCurrentTab}) {
+export default function Dashboard({ setCurrentTab }) {
   const stocks = useSelector((state) => state.stocksReducer);
   const users = useSelector((state) => state.authReducer);
   const logs = useSelector((state) => state.logsReducer);
 
-  
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getUserList());
     dispatch(getLogs());
     dispatch(getStocks());
   }, [dispatch]);
 
-
   const renderStockItem = (stock) => (
     <>
-      <div className="flex flex-col flex-wrap p-2 mx-4">
+      <div className="flex flex-col flex-wrap ">
         <span className="font-semibold">{stock.name}</span>
         <span className="text-gray-500">{stock.ticker}</span>
       </div>
-      <span className={`text-sm text-green-500`}>
-        {stock.currentPrice}
-      </span>
+      <span className={`text-sm text-green-500`}>{stock.currentPrice}</span>
     </>
   );
 
   const renderRecentActivityItem = (logs) => (
     <>
-      <div className="flex flex-col flex-wrap p-2 mx-4">
+      <div className="flex flex-col flex-wrap ">
         <span className="font-semibold">{logs.userId}</span>
         <span className="text-gray-500 ">{logs.logAction}</span>
       </div>
-      <span className="text-sm">{logs.loggedAt}</span>
+      <span className="text-sm">{new Date(logs.loggedAt).toISOString().split('T')[0]}</span>
     </>
   );
 
   const renderSubscriberItem = (user) => (
     <>
-      <div className="flex flex-col flex-wrap p-2 mx-4">
+      <div className="flex flex-col flex-wrap ">
         <span>{user.name}</span>
         <span className="text-sm text-gray-500">{user.email}</span>
       </div>
@@ -64,7 +59,7 @@ export default function Dashboard({setCurrentTab}) {
   );
   return (
     <>
-      <div className="w-full  g-3 flex flex-col md:flex-row p-5">
+      <div className="w-full g-3 flex flex-col md:flex-row p-5">
         <StashCard
           title="Total Subscribers"
           value="12,345"
@@ -87,36 +82,53 @@ export default function Dashboard({setCurrentTab}) {
         />
       </div>
       <div className="w-full flex flex flex-col lg:flex-row px-5 justify-around">
-        <div className="bg-white shadow-md rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 m-2 p-4">
+        <div className="bg-white shadow-md rounded-lg w-full flex-1 m-2 p-4">
           <div className="flex justify-between p-2 justify-items-center mb-4">
             <span className="font-bold text-lg">Stocks</span>
-            <span className="text-gray-500 font-semibold text-sm mt-1"  >View All</span>
+            <span className="text-gray-500 font-semibold text-sm mt-1">
+              View All
+            </span>
           </div>
-          {stocks && stocks.slice(0, 5).map((item, index) => (
-            <div className="flex justify-between items-center mb-2">{renderStockItem(item)}</div>
-          ))}
+          {stocks &&
+            stocks
+              .slice(0, 5)
+              .map((item, index) => (
+                <div className="flex justify-between items-center mb-2">
+                  {renderStockItem(item)}
+                </div>
+              ))}
         </div>
-        <div className="bg-white shadow-md rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 m-2 p-4">
+        <div className="bg-white shadow-md rounded-lg w-full flex-1 m-2 p-4">
           <div className="flex justify-between p-2 justify-items-center mb-4">
-
             <span className="font-bold text-lg">Subscribers</span>
-            <span className="text-gray-500 font-semibold text-sm mt-1" >View All</span>
+            <span className="text-gray-500 font-semibold text-sm mt-1">
+              View All
+            </span>
           </div>
-          {Array.isArray(users) && users.map((item, index) => (
-            <div className="flex justify-between items-center mb-2">{renderSubscriberItem(item)}</div>
-          ))}
+          {Array.isArray(users) &&
+            users.map((item, index) => (
+              <div className="flex justify-between items-center mb-2">
+                {renderSubscriberItem(item)}
+              </div>
+            ))}
         </div>
-        <div className="bg-white shadow-md rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 m-2 p-4">
+        <div className="bg-white shadow-md rounded-lg w-full flex-1 m-2 p-4">
           <div className="flex justify-between p-2 justify-items-center mb-4">
             <span className="font-bold text-lg">Recent Activity</span>
-            <span className="text-gray-500 font-semibold text-sm mt-1">View All</span>
+            <span className="text-gray-500 font-semibold text-sm mt-1">
+              View All
+            </span>
           </div>
-          {logs && logs.slice(0, 5).map((item, index) => (
-            <div className="flex justify-between items-center mb-2">{renderRecentActivityItem(item)}</div>
-          ))}
+          {logs &&
+            logs
+              .slice(0, 5)
+              .map((item, index) => (
+                <div className="flex justify-between items-center mb-2">
+                  {renderRecentActivityItem(item)}
+                </div>
+              ))}
         </div>
       </div>
-
     </>
   );
 }
