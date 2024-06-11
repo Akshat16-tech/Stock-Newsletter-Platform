@@ -21,11 +21,9 @@ export default function AdminDashboard() {
       case "blogs":
         return <Blogs />;
       default:
-        return <Dashboard setCurrentTab={setCurrentTab} />;
+        return <Dashboard />;
     }
   };
-
-  console.log("{shownTab(currentTab)}", shownTab(currentTab));
 
   return (
     <>
