@@ -1,7 +1,12 @@
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import { getBlogs, createBlog, removeBlog } from '../controllers/blogs.js';
+import express from "express";
+import multer from "multer";
+import path from "path";
+import {
+  getBlogs,
+  getBlogById,
+  createBlog,
+  removeBlog,
+} from "../controllers/blogs.js";
 
 const router = express.Router();
 
@@ -21,9 +26,9 @@ const upload = multer({ storage: storage });
 //   console.log("req", req);
 //   res.sendFile(path.join('./uploads/' + req.params.filename));
 // });
-router.get('/', getBlogs);
-router.post('/', upload.single("media"), createBlog);
-router.delete('/:id', removeBlog);
-
+router.get("/", getBlogs);
+router.get("/:id", getBlogById);
+router.post("/", upload.single("media"), createBlog);
+router.delete("/:id", removeBlog);
 
 export default router;

@@ -34,7 +34,9 @@ export default function Dashboard({ setCurrentTab }) {
         <span className="font-semibold">{logs.userId}</span>
         <span className="text-gray-500 ">{logs.logAction}</span>
       </div>
-      <span className="text-sm">{new Date(logs.loggedAt).toISOString().split('T')[0]}</span>
+      <span className="text-sm">
+        {new Date(logs.loggedAt).toISOString().split("T")[0]}
+      </span>
     </>
   );
 

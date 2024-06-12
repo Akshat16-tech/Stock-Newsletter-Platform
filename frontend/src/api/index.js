@@ -43,5 +43,6 @@ export const fetchLogs = () => api.get("/logs");
 
 // blogs
 export const fetchBlogs = () => api.get("/blogs");
+export const fetchBlogsId = (id) => api.get(`/blogs/${id}`);
 export const createBlog = (formInput) => api.post("/blogs", formInput);
 export const removeBlog = (id) => api.delete(`/blogs/${id}`);

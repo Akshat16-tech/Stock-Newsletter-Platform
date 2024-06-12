@@ -15,6 +15,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import StockDetails from "./components/StockDetails/StockDetails";
 import TransactionForm from "./components/TransactionForm/TransactionForm";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import BlogDetail from "./components/AdminDashboard/Blogs/BlogDetails";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
@@ -37,6 +38,7 @@ const App = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/markets" element={<Markets />} />

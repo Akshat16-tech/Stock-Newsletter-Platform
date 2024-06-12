@@ -1,9 +1,10 @@
 // import { jwtDecode } from "jwt-decode";
-import { fetchBlogs, createBlog } from "../api/index";
+import { fetchBlogs,fetchBlogsId, createBlog } from "../api/index";
 import {
   BLOG_ERROR_OCCURRED,
   CREATE_BLOGS,
   GET_ALL_BLOGS,
+  GET_BLOG_BY_ID,
   REMOVE_BLOGS,
 } from "../constants/actions";
 
@@ -11,8 +12,25 @@ import {
 export const getBlogs = () => async (dispatch) => {
   try {
     const { data } = await fetchBlogs();
-    console.log("data", data);
+    console.log("data blog", data);
     dispatch({ type: GET_ALL_BLOGS, payload: data });
+  } catch (error) {
+    if (error.response) {
+      dispatch({
+        type: BLOG_ERROR_OCCURRED,
+        payload: error.response.data.message,
+      });
+    } else {
+      dispatch({ type: BLOG_ERROR_OCCURRED, payload: "Blog not found!" });
+    }
+  }
+};
+
+// GET Blog by ID
+export const getBlogById = (id) => async (dispatch) => {
+  try {
+    const { data } = await fetchBlogsId(id);
+    dispatch({ type: GET_BLOG_BY_ID, payload: data });
   } catch (error) {
     if (error.response) {
       dispatch({

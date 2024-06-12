@@ -35,5 +35,6 @@ export const BLOG_ERROR_OCCURRED = 'BLOG_ERROR_OCCURRED';
 
 //Blogs actions
 export const GET_ALL_BLOGS = 'GET_ALL_BLOGS';
+export const GET_BLOG_BY_ID = 'GET_BLOG_BY_ID';
 export const CREATE_BLOGS = 'CREATE_BLOGS';
 export const REMOVE_BLOGS = 'REMOVE_BLOGS';
