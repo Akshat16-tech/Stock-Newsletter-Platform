@@ -17,7 +17,7 @@ export const getSurvey = async (req, res) => {
 // POST
 export const addSurvey = async (req, res) => {
     try {
-        const { response, comment, userId } = req.body;
+        const { response, comment } = req.body;
 
         const user = await User.findById(req.userId);
 

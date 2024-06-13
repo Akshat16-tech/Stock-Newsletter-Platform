@@ -9,7 +9,7 @@ const surveySchema = mongoose.Schema({
         type: String,
         default: ''
       },
-      userId: {
+      userd: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true

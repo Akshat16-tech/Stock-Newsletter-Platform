@@ -1,4 +1,4 @@
-export const UserSurvey = [
+export const userSurvey = [
     {
         questionId: 1,
         label: "Which stock market sectors are you primarily interested in?How useful is the prosthesis for the activity?",

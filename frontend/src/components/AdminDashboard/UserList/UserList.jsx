@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 export default function UserList() {
   const [searchFilter, setSearchFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [stocksPerPage] = useState(12);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [stocksPerPage] = useState(12);
   const users = useSelector((state) => state.authReducer);
 
   const dispatch = useDispatch();

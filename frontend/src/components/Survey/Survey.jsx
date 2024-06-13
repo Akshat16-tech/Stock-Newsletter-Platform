@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userSurvey } from "./../../constants/userSurvey.js";
 
 function ProjectPlannerForm() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    name: "",
-    number: "",
-    occupation: "",
-    completionDate: "",
-    projectDetails: "",
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
   });
 
   const handleChange = (e) => {
@@ -29,14 +31,14 @@ function ProjectPlannerForm() {
     setStep(step - 1);
   };
 
-  const redoStep = () => {
-    setStep(1);
-  };
+  // const redoStep = () => {
+  //   setStep(1);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("formData",formData);
     navigate("/");
-    console.log(formData);
   };
 
   return (
@@ -71,7 +73,7 @@ function ProjectPlannerForm() {
                 <div className="h-full bg-black rounded-3xl w-1/5"></div>
               </div>
               <div className="mt-12 text-3xl  text-center">
-                Which stock market sectors are you primarily interested in?
+                {userSurvey[0].label}
               </div>
 
               <div>
@@ -85,86 +87,26 @@ function ProjectPlannerForm() {
                   value={formData.name} // This correctly points to formData.name
                   onChange={handleChange}
                 /> */}
+                {userSurvey[0].options.map((option) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      id={`survey-${option.value}`}
+                      type="radio"
+                      checked={formData[1] === option.label}
+                      value={option.label}
+                      name={`${userSurvey[0].questionId}`}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`${option.label}-${option.value}`}
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
 
-                <div class="flex items-center">
-                  <input
-                    id="default-radio-1"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-1"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Technology
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Energy
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Healthcare
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Consumer Goods
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Others (please specify)
-                  </label>
-                </div>
               </div>
 
               {/* Number input field */}
@@ -220,88 +162,28 @@ function ProjectPlannerForm() {
                 <div className="h-full bg-black rounded-3xl w-2/5"></div>
               </div>
               <div className="mt-12 text-3xl  text-center">
-                What is your investment strategy?
+                {userSurvey[1].label}
               </div>
               <div>
-                <div class="flex items-center">
-                  <input
-                    id="default-radio-1"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-1"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Long-term buy and hold
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Active trading
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Value investing
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Growth investing
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Other (please specify)
-                  </label>
-                </div>
+                {userSurvey[1].options.map((option) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      id={`survey-${option.value}`}
+                      type="radio"
+                      value={option.label}
+                      checked={formData[2] === option.label}
+                      name={`${userSurvey[1].questionId}`}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`${option.label}-${option.value}`}
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between mt-12">
                 <button
@@ -338,73 +220,28 @@ function ProjectPlannerForm() {
                 <div className="h-full bg-black rounded-3xl w-3/5"></div>
               </div>
               <div className="mt-12 text-3xl  text-center">
-                How often would you like to receive stock updates and
-                predictions?
+                {userSurvey[2].label}
               </div>
               <div>
-                <div class="flex items-center">
-                  <input
-                    id="default-radio-1"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-1"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Daily
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Weekly
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Bi-weekly
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Monthly
-                  </label>
-                </div>
+                {userSurvey[2].options.map((option) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      id={`survey-${option.value}`}
+                      type="radio"
+                      value={option.label}
+                      checked={formData[3] === option.label}
+                      name={`${userSurvey[2].questionId}`}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`${option.label}-${option.value}`}
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between mt-12">
                 <button
@@ -441,41 +278,28 @@ function ProjectPlannerForm() {
                 <div className="h-full bg-black rounded-3xl w-4/5"></div>
               </div>
               <div className="mt-12 text-3xl  text-center">
-                Would you prefer to receive real-time alerts for significant
-                stock market events?
+                {userSurvey[3].label}
               </div>
               <div>
-                <div class="flex items-center">
-                  <input
-                    id="default-radio-1"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-1"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Yes
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    No
-                  </label>
-                </div>
+                {userSurvey[3].options.map((option) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      id={`survey-${option.value}`}
+                      type="radio"
+                      value={option.label}
+                      checked={formData[4] === option.label}
+                      name={`${userSurvey[3].questionId}`}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`${option.label}-${option.value}`}
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between mt-12">
                 <button
@@ -512,57 +336,28 @@ function ProjectPlannerForm() {
                 <div className="h-full bg-black rounded-3xl w-5/5"></div>
               </div>
               <div className="mt-12 text-3xl  text-center">
-                What level of detail would you prefer for stock analysis and
-                predictions?
+              {userSurvey[4].label}
               </div>
               <div>
-                <div class="flex items-center">
-                  <input
-                    id="default-radio-1"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-1"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Beginner (simple explanations and basic insights)
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Intermediate (moderate level of technical analysis)
-                  </label>
-                </div>
-                <div class="flex items-center">
-                  <input
-                    checked
-                    id="default-radio-2"
-                    type="radio"
-                    value=""
-                    name="default-radio"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    for="default-radio-2"
-                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Advanced (in-depth technical and fundamental analysis)
-                  </label>
-                </div>
+              {userSurvey[4].options.map((option) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      id={`survey-${option.value}`}
+                      type="radio"
+                      value={option.label}
+                      checked={formData[5] === option.label}
+                      name={`${userSurvey[4].questionId}`}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`${option.label}-${option.value}`}
+                      className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between mt-12">
                 <button
