@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Auth from "./components/Auth/Auth";
@@ -17,6 +17,8 @@ import TransactionForm from "./components/TransactionForm/TransactionForm";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import BlogDetail from "./components/AdminDashboard/Blogs/BlogDetails";
 import Survey from "./components/Survey/Survey"
+import { useDispatch } from 'react-redux';
+import { getUserInfo } from "./actions/auth";
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
@@ -28,8 +30,13 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 
 const App = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getUserInfo());
+    },[dispatch])
+    
   const isAuthenticated = user ? true : false; // Replace with your authentication logic
-
   const location = useLocation();
   const shouldRenderFooter = location.pathname !== "/dashboard";
   return (
