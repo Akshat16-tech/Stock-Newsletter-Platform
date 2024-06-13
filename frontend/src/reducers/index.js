@@ -4,7 +4,8 @@ import authReducer from './auth';
 import purchasedReducer from './purchased';
 import transactionsReducer from './transactions';
 import logsReducer from './logs';
-import { authErrorsReducer, marketErrorsReducer, purchasedErrorsReducer, userErrorsReducer, transactionErrorsReducer, logsErrorsReducer } from './error';
+import blogsReducer from './blogs';
+import { authErrorsReducer, marketErrorsReducer, purchasedErrorsReducer, userErrorsReducer, transactionErrorsReducer, logsErrorsReducer, blogsErrorsReducer } from './error';
 import { LOGOUT } from '../constants/actions';
 
 const appReducer = combineReducers({ 
@@ -13,12 +14,14 @@ const appReducer = combineReducers({
   purchasedReducer,
   transactionsReducer,
   logsReducer, 
+  blogsReducer,
   authErrorsReducer, 
   marketErrorsReducer,
   purchasedErrorsReducer,
   userErrorsReducer,
   transactionErrorsReducer,
-  logsErrorsReducer
+  logsErrorsReducer,
+  blogsErrorsReducer,
 });
 
 export const reducer = (state, action) => {

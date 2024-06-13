@@ -5,7 +5,6 @@ import { GET_ALL_STOCKS, GET_ONE_STOCK, MARKET_ERROR_OCCURRED } from '../constan
 export const getStocks = () => async (dispatch) => {
   try {
     const { data } = await fetchStocks();
-    console.log("data", data);
     dispatch({ type: GET_ALL_STOCKS, payload: data });
   } catch (error) {
     if (error.response) {

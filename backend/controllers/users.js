@@ -26,7 +26,7 @@ async function clearFirstLog(res, userId) {
 
 export const registerUser = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName, userType } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists." });
@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHashed = await bcrypt.hash(password, salt);
-    const createdUser = await User.create({ email: email, password: passwordHashed, name: `${firstName} ${lastName}`, coins: 100000 });
+    const createdUser = await User.create({ email: email, password: passwordHashed, name: `${firstName} ${lastName}`, coins: 100000, userType: userType });
     const token = jwt.sign({ email: createdUser.email, id: createdUser._id }, jwtSecret, { expiresIn: "15m" });
 
     const registerLog = new ActionLog({
@@ -48,6 +48,7 @@ export const registerUser = async (req, res) => {
       name: createdUser.name,
       email: createdUser.email,
       coins: createdUser.coins,
+      userType: userType,
     }
 
     res.status(201).json({ result: userResponse, token: token });
@@ -60,7 +61,7 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
-
+    
     if (!existingUser) {
       return res.status(404).json({ message: "User doesn't exist." });
     }
@@ -70,7 +71,7 @@ export const loginUser = async (req, res) => {
     if (!passwordCorrect) {
       return res.status(400).json({ message: "Invalid login credentials." });
     }
-
+    
     const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, jwtSecret, { expiresIn: "120m" });
 
     const loginLog = new ActionLog({
@@ -79,16 +80,32 @@ export const loginUser = async (req, res) => {
     });
     await loginLog.save();
     clearFirstLog(res, existingUser._id);
-
+    
     const userResponse = {
       name: existingUser.name,
       email: existingUser.email,
       coins: existingUser.coins,
+      userType: existingUser.userType,
     }
 
     res.status(200).json({ result: userResponse, token: token });
   } catch (err) {
     res.status(500).json({ message: "An error occurred while registering the user." });
+  }
+};
+
+export const getUserList = async (req, res) => {
+  try {
+    const userData = await User.find();
+
+    const userList = userData.map(user => {
+      const { email, name, coins, userType } = user;
+      return { email, name, coins, userType };
+    });
+
+    res.status(200).json(userList);
+  } catch (error) {
+    res.status(404).json({ message: "An error has occurred fetching the user requested." });
   }
 };
 
@@ -100,6 +117,7 @@ export const getUserInfo = async (req, res) => {
       name: userData.name,
       email: userData.email,
       coins: userData.coins,
+      userType: userData.userType,
     }
 
     res.status(200).json(userResponse);
@@ -111,9 +129,15 @@ export const getUserInfo = async (req, res) => {
 export const updateUserName = async (req, res) => {
   try {
     const { firstName, lastName } = req.body;
-
+    
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(404).send(`No user with id: ${req.userId}`);
+    }
+    
+    const userData = await User.findById(req.userId);
+
+    if (userData.userType === "admin") {
+      return res.status(400).send({ message: "Not allowed to modify admin account!" });
     }
 
     await User.findByIdAndUpdate(req.userId, { name: `${firstName} ${lastName}` });
@@ -124,6 +148,7 @@ export const updateUserName = async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       coins: updatedUser.coins,
+      userType: updatedUser.userType,
     }
 
     res.status(200).json(userResponse);
@@ -135,16 +160,21 @@ export const updateUserName = async (req, res) => {
 export const updateUserPassword = async (req, res) => {
   try {
     const { currentPassword, newPassword, newPasswordConfirmed } = req.body;
-
+    
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(404).send(`No user with id: ${req.userId}`);
+    }
+
+    const userData = await User.findById(req.userId);
+
+    if (userData.userType === "admin") {
+      return res.status(400).send({ message: "Not allowed to modify admin account!" });
     }
 
     if (newPassword !== newPasswordConfirmed) {
       return res.status(400).json({ message: "Passwords do not match!." });
     }
 
-    const userData = await User.findById(req.userId);
     const passwordCorrect = await bcrypt.compare(currentPassword, userData.password);
 
     if (!passwordCorrect) {
@@ -165,6 +195,12 @@ export const removeUser = async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.userId)) {
       return res.status(404).send(`No user with id: ${req.userId}`);
+    }
+
+    const userData = await User.findById(req.userId);
+
+    if (userData.userType === "admin") {
+      return res.status(400).send({ message: "Not allowed to modify guest account!" });
     }
 
     await ActionLog.deleteMany({ userId: req.userId });

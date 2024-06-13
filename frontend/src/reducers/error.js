@@ -1,4 +1,12 @@
-import { AUTH_ERROR_OCCURRED, MARKET_ERROR_OCCURRED, PURCHASED_ERROR_OCCURRED, USER_ERROR_OCCURRED, TRANSACTION_ERROR_OCCURRED, LOG_ERROR_OCCURRED } from '../constants/actions';
+import {
+  AUTH_ERROR_OCCURRED,
+  MARKET_ERROR_OCCURRED,
+  PURCHASED_ERROR_OCCURRED,
+  USER_ERROR_OCCURRED,
+  TRANSACTION_ERROR_OCCURRED,
+  LOG_ERROR_OCCURRED,
+  BLOG_ERROR_OCCURRED,
+} from "../constants/actions";
 
 // errors for authentication
 const authErrorsReducer = (state = [], action) => {
@@ -60,4 +68,21 @@ const logsErrorsReducer = (state = [], action) => {
   }
 };
 
-export { authErrorsReducer, marketErrorsReducer, purchasedErrorsReducer, userErrorsReducer, transactionErrorsReducer, logsErrorsReducer };
+const blogsErrorsReducer = (state = [], action) => {
+  switch (action.type) {
+    case BLOG_ERROR_OCCURRED:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export {
+  authErrorsReducer,
+  marketErrorsReducer,
+  purchasedErrorsReducer,
+  userErrorsReducer,
+  transactionErrorsReducer,
+  logsErrorsReducer,
+  blogsErrorsReducer,
+};

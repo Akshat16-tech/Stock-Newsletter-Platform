@@ -1,4 +1,4 @@
-import { AUTH, DELETE_USER, LOGOUT, USER_INFO, USER_UPDATE_NAME } from '../constants/actions';
+import { AUTH, DELETE_USER, LOGOUT, GET_ALL_USERS, USER_INFO, USER_UPDATE_NAME } from '../constants/actions';
 
 // handle user actions
 const authReducer = (state = { authData: null }, action) => {
@@ -9,6 +9,8 @@ const authReducer = (state = { authData: null }, action) => {
     case LOGOUT:
       localStorage.removeItem('profile');
       return { ...state, authData: null, errors: null };
+    case GET_ALL_USERS:
+      return action.payload;  
     case USER_INFO:
       const userObject = JSON.parse(localStorage.getItem("profile"));
       userObject.result.coins = action?.data.coins;

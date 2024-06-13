@@ -14,6 +14,8 @@ import userRoutes from './routes/users.js';
 import purchasedStockRoutes from './routes/purchased_stocks.js';
 import actionLogRoutes from './routes/action_logs.js';
 import transactionRoutes from './routes/transactions.js';
+import blogRoutes from './routes/blogs.js'
+import surveyRoutes from './routes/survey.js'
 import { tickers } from './web_sockets/tickers.js';
 
 // environment configuration
@@ -27,22 +29,30 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // express.js configuration
+app.use('/uploads', express.static('uploads'));
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 
 // express.js routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  if (req.query.filename) {
+    res.sendFile(path.join(__dirname + '/uploads/' + req.query.filename));
+  } else {
+    res.sendFile(__dirname + '/index.html');
+  }
 });
 app.use('/stocks', stockRoutes);
 app.use('/user', userRoutes);
 app.use('/purchased', purchasedStockRoutes);
 app.use('/logs', actionLogRoutes);
 app.use('/transactions', transactionRoutes);
+app.use('/blogs', blogRoutes);
+app.use('/survey', surveyRoutes);
 app.get('*', (req, res) => {
   res.status(404).sendFile(__dirname + '/not_found.html');
 });
+
 
 // socket.io data emission
 io.on('connection', (socket) => {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import { useDispatch, useSelector } from 'react-redux';
 import { getStock } from '../../actions/stocks';
@@ -8,7 +8,7 @@ import CurrentPrice from "../CurrentPrice/CurrentPrice"
 import PriceChart from "../PriceChart/PriceChart";
 
 const StockDetails = (props) => {
-  const { id } = props;
+  const { id } = useParams();
   const socket = socketIOClient(process.env.REACT_APP_STOCKS_API, { transports: ['websocket', 'polling', 'flashsocket'] });
   const stock = useSelector((state) => state.stocksReducer);
   const dispatch = useDispatch();

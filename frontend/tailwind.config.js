@@ -7,5 +7,5 @@ module.exports = {
     extend: {},
   },
   darkMode: 'class',
-  plugins: [require('tailwindcss-font-inter')],
+  plugins: [require('tailwindcss-font-inter'), require('@tailwindcss/forms'),],
 }
