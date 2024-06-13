@@ -68,7 +68,7 @@ export default function AdminDashboard() {
                 href="/dashboard"
                 className="text-white flex items-center space-x-2 px-4"
               >
-                <span className="text-2xl font-extrabold">Admin Penal</span>
+                <span className="text-2xl font-extrabold">Admin Panel</span>
               </a>
 
               {/* <!-- nav --> */}
