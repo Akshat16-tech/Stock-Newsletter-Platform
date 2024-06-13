@@ -28,9 +28,9 @@ const BlogDetail = () => {
     <>
       <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
         <div
-          class="bg-cover bg-center text-center overflow-hidden"
+          class="bg-cover bg-center text-center overflow-hidden bg-[length:100%_300px] bg-no-repeat"
           style={{
-            minHeight: "500px",
+            minHeight: "300px",
             backgroundImage: `url(${process.env.REACT_APP_STOCKS_API}?filename=${blog.image})`,
           }}
           title={blog.title}
