@@ -13,6 +13,7 @@ export const REMOVE_PURCHASED = 'REMOVE_PURCHASED';
 //authentication and user actions
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const USER_INFO = 'USER_INFO';
 export const USER_UPDATE_NAME = 'USER_UPDATE_NAME';
 export const DELETE_USER = 'DELETE_USER';
@@ -30,3 +31,10 @@ export const PURCHASED_ERROR_OCCURRED = 'PURCHASED_ERROR_OCCURRED';
 export const USER_ERROR_OCCURRED = 'USER_ERROR_OCCURRED';
 export const TRANSACTION_ERROR_OCCURRED = 'TRANSACTION_ERROR_OCCURRED';
 export const LOG_ERROR_OCCURRED = 'LOG_ERROR_OCCURRED';
+export const BLOG_ERROR_OCCURRED = 'BLOG_ERROR_OCCURRED';
+
+//Blogs actions
+export const GET_ALL_BLOGS = 'GET_ALL_BLOGS';
+export const GET_BLOG_BY_ID = 'GET_BLOG_BY_ID';
+export const CREATE_BLOGS = 'CREATE_BLOGS';
+export const REMOVE_BLOGS = 'REMOVE_BLOGS';

@@ -10,6 +10,7 @@ const Auth = () => {
   const errors = useSelector((state) => state.authErrorsReducer);
   const [form, setForm] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAdmin, setisAdmin] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,9 +36,15 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setForm({ ...form, "userType": isAdmin ? 'admin' : 'user' });
     dispatch({ type: AUTH_ERROR_OCCURRED, payload: "" });
     if (isSignup) {
-      dispatch(registerUser(form, navigate, state));
+      if (isAdmin && form.secretCode !== process.env.REACT_APP_ADMIN_SECRET_CODE) {
+        dispatch({ type: AUTH_ERROR_OCCURRED, payload: "Incorrect Secret code!" });
+        setIsLoading(false);
+      } else {
+        dispatch(registerUser(form, navigate, state));
+      }
     } else {
       dispatch(loginUser(form, navigate, state));
     }
@@ -49,7 +56,7 @@ const Auth = () => {
 
   return (
     <div className={`${isSignup ? 'h-auto' : 'h-screen'} bg-white dark:bg-gray-800 my-auto flex items-center`} >
-      <div className="w-full max-w-sm mx-auto overflow-hidden bg-gray-100 rounded-lg shadow-md dark:bg-gray-900" style={{marginTop: '80px'}}>
+      <div className="w-full max-w-sm mx-auto overflow-hidden bg-gray-100 rounded-lg shadow-md dark:bg-gray-900" style={{ marginTop: '80px' }}>
         <div className="px-6 py-4">
           <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">Stocks</h2>
 
@@ -60,6 +67,11 @@ const Auth = () => {
           <form onSubmit={handleSubmit} name="auth_form">
             {isSignup &&
               <>
+                {isAdmin &&
+                  <div className="w-full mt-4">
+                    <input className="block w-full px-4 py-2 mt-2 text-gray-700 dark:text-gray-200 placeholder-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required type="text" placeholder="Secret Code" aria-label="Secret Code" name="secretCode" onChange={handleChange} />
+                  </div>
+                }
                 <div className="w-full mt-4">
                   <input className="block w-full px-4 py-2 mt-2 text-gray-700 dark:text-gray-200 placeholder-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required type="text" placeholder="First name" aria-label="First ame" name="firstName" onChange={handleChange} />
                 </div>
@@ -108,6 +120,19 @@ const Auth = () => {
           </form>
         </div>
 
+        {isSignup &&
+          <div className="flex items-center justify-center mt-6">
+            <button type="submit"
+              onClick={() => setisAdmin(!isAdmin)}
+              className="flex items-center justify-center w-full px-6 py-2 text-sm font-medium text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:bg-blue-400 focus:outline-none">
+
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="hidden mx-2 sm:inline">{isAdmin ? 'Register as user' : 'Register as Admin'}</span>
+            </button>
+          </div>
+        }
         <div className="flex items-center justify-center py-4 text-center bg-gray-300 dark:bg-gray-700">
           <span className="text-sm text-gray-600 dark:text-gray-200">{!isSignup ? "Don't have an account?" : "Already have an account?"} </span>
 

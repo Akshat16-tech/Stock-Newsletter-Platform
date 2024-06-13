@@ -1,5 +1,5 @@
-import { login, register, userInfo, updateUsername, removeUser } from '../api/index.js';
-import { AUTH, AUTH_ERROR_OCCURRED, DELETE_USER, USER_ERROR_OCCURRED, USER_INFO, USER_UPDATE_NAME } from '../constants/actions';
+import { login, register, userList, userInfo, updateUsername, removeUser } from '../api/index.js';
+import { AUTH, AUTH_ERROR_OCCURRED, DELETE_USER, USER_ERROR_OCCURRED, GET_ALL_USERS, USER_INFO, USER_UPDATE_NAME } from '../constants/actions';
 
 // POST /user/login
 export const loginUser = (formInput, router, state) => async (dispatch) => {
@@ -28,6 +28,16 @@ export const registerUser = (formInput, router, state) => async (dispatch) => {
     } else {
       dispatch({ type: AUTH_ERROR_OCCURRED, payload: "Auth server is down!" });
     }
+  }
+};
+
+// GET /user/userlist
+export const getUserList = () => async (dispatch) => {
+  try {
+    const { data } = await userList();
+    dispatch({ type: GET_ALL_USERS, payload: data });
+  } catch (error) {
+    console.log(error);
   }
 };
 
