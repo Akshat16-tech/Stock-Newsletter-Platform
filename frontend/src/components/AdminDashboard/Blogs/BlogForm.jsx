@@ -23,7 +23,6 @@ export default function Blog({ handleCloseModal }) {
   const [form, setForm] = useState(new FormData());
   const [value, setValue] = useState("");
 
-
   const handleChange = (e) => {
     if (e.target.name === "content") {
       setValue(e.target.value);
@@ -60,7 +59,11 @@ export default function Blog({ handleCloseModal }) {
   return (
     <>
       <section className="max-w-4xl mx-auto bg-[#FFFFFF] mt-4">
-        <form onSubmit={handleSubmitNewBlog} encType="multipart/form-data" method="post">
+        <form
+          onSubmit={handleSubmitNewBlog}
+          encType="multipart/form-data"
+          method="post"
+        >
           <div className="grid grid-cols-1 gap-6 mt-4  ">
             <div>
               <label className="" for="username">
@@ -88,7 +91,7 @@ export default function Blog({ handleCloseModal }) {
               />
             </div>
             <EditorProvider>
-              <Editor value={value} name="content" onChange={handleChange} >
+              <Editor value={value} name="content" onChange={handleChange}>
                 <Toolbar>
                   <BtnBold />
                   <BtnItalic />
@@ -145,7 +148,6 @@ export default function Blog({ handleCloseModal }) {
                 </div>
               </div>
             </div>
-
           </div>
 
           <div className="flex justify-end mt-6">

@@ -25,16 +25,29 @@ const BlogDetail = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
-      <img
-        className="w-full h-auto mb-4"
-        src={`${process.env.REACT_APP_STOCKS_API}?filename=${blog.image}`}
-        alt={blog.title}
-      />
-      <p className="mb-4">{blog.content}</p>
-      <p className="text-gray-700">{blog.tag}</p>
-    </div>
+    <>
+      <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
+        <div
+          class="bg-cover bg-center text-center overflow-hidden"
+          style={{
+            minHeight: "500px",
+            backgroundImage: `url(${process.env.REACT_APP_STOCKS_API}?filename=${blog.image})`,
+          }}
+          title={blog.title}
+        ></div>
+        <div class="max-w-3xl mx-auto">
+          <div class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+            <div class="bg-white relative top-0 -mt-32 p-5 sm:p-10">
+              <h1 href="#" class="text-gray-900 font-bold text-3xl mb-2">
+                {blog.title}
+              </h1>
+              <p class="text-gray-700 text-xs mt-2">{blog.tag} {new Date(blog.create_at).toISOString().split("T")[0]}</p>
+              <p class="text-base leading-8 my-5">{blog.content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

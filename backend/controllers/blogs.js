@@ -22,7 +22,9 @@ export const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
     if (!blog) {
-      return res.status(404).json({ status: "error", message: "Blog not found!" });
+      return res
+        .status(404)
+        .json({ status: "error", message: "Blog not found!" });
     }
     const { _id, title, content, tag, image, create_at } = blog;
     res.status(200).json({ _id, title, content, tag, image, create_at });
@@ -40,7 +42,7 @@ export const createBlog = async (req, res) => {
       image: req.file.filename,
       // email: req.body.email,
     });
-    res.status(201).json({ status: 200 });
+    res.status(201).json({ blog });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
