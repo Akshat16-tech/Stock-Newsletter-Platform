@@ -16,6 +16,7 @@ import StockDetails from "./components/StockDetails/StockDetails";
 import TransactionForm from "./components/TransactionForm/TransactionForm";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import BlogDetail from "./components/AdminDashboard/Blogs/BlogDetails";
+import Survey from "./components/Survey/Survey"
 
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) {
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="/markets" element={<Markets />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/survey" element={<Survey />} />
             <Route path="/stock/:id" element={<StockDetails />} />
             <Route
               path="/dashboard"
